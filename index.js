@@ -1,8 +1,10 @@
 /* Two Sum
 
-Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+Given an array of integers, return indices of the two numbers such that they add up to a
+specific target.
 
-You may assume that each input would have exactly one solution, and you may not use the same element twice.
+You may assume that each input would have exactly one solution, and you may not use the same
+element twice.
 
 Example:
 Given nums = [2, 7, 11, 15], target = 9,
@@ -29,7 +31,8 @@ function twoSum(nums, target) {
 
 Given an array of integers, find if the array contains any duplicates.
 
-Your function should return true if any value appears at least twice in the array, and it should return false if every element is distinct.
+Your function should return true if any value appears at least twice in the array, and it
+should return false if every element is distinct.
 
 Example 1:
 Input: [1,2,3,1]
@@ -63,7 +66,8 @@ function containsDuplicate(nums) {
 Share
 Say you have an array for which the ith element is the price of a given stock on day i.
 
-If you were only permitted to complete at most one transaction (i.e., buy one and sell one share of the stock), design an algorithm to find the maximum profit.
+If you were only permitted to complete at most one transaction (i.e., buy one and sell one
+share of the stock), design an algorithm to find the maximum profit.
 
 Note that you cannot sell a stock before you buy one.
 
@@ -155,7 +159,8 @@ function isAnagram(s, t) {
 
 /* Valid Parentheses
 
-Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if
+the input string is valid.
 
 An input string is valid if:
   1. Open brackets must be closed by the same type of brackets.
@@ -218,7 +223,8 @@ function validParentheses(s) {
 
 /* Product of Array Except Self
 
-Given an array nums of n integers where n > 1,  return an array output such that output[i] is equal to the product of all the elements of nums except nums[i].
+Given an array nums of n integers where n > 1,  return an array output such that output[i]
+is equal to the product of all the elements of nums except nums[i].
 
 Example:
 Input:  [1,2,3,4]
@@ -228,7 +234,8 @@ Note:
 Please solve it without division and in O(n).
 
 Follow up:
-Could you solve it with constant space complexity? (The output array does not count as extra space for the purpose of space complexity analysis.)
+Could you solve it with constant space complexity? (The output array does not count as extra
+space for the purpose of space complexity analysis.)
 
 */
 
@@ -250,7 +257,8 @@ function productExceptSelf(nums) {
 
 /* Maximum Subarray (kdane)
 
-Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+Given an integer array nums, find the contiguous subarray (containing at least one number)
+which has the largest sum and return its sum.
 
 Example:
 Input: [-2,1,-3,4,-1,2,1,-5,4],
@@ -258,7 +266,8 @@ Output: 6
 Explanation: [4,-1,2,1] has the largest sum = 6.
 
 Follow up:
-If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
+If you have figured out the O(n) solution, try coding another solution using the divide and
+conquer approach, which is more subtle.
 
 */
 
@@ -276,3 +285,58 @@ function maxSubArray(nums) {
   return max;
 }
 
+/* Three Sum
+
+Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0?
+Find all unique triplets in the array which gives the sum of zero.
+
+Note:
+The solution set must not contain duplicate triplets.
+
+Example:
+Given array nums = [-1, 0, 1, 2, -1, -4],
+
+A solution set is:
+[
+  [-1, 0, 1],
+  [-1, -1, 2]
+]
+
+*/
+
+function threeSum(nums) {
+  const results = [];
+
+  if (nums.length < 3) {
+    return results;
+  }
+
+  nums = nums.sort((a, b) => a - b);
+
+  for (let i = 0; i < nums.length; i++) {
+    if (i > 0 && nums[i] === nums[i - 1]) {
+      continue;
+    }
+    let left = i + 1;
+    let right = nums.length - 1;
+
+    while (left < right) {
+      let sum = nums[i] + nums[left] + nums[right];
+      if (sum === 0) {
+        results.push([nums[i], nums[left], nums[right]]);
+
+        while (nums[left] === nums[left + 1]) left++;
+        while (nums[right] === nums[right - 1]) right--;
+
+        left++;
+        right--;
+      } else if (sum < 0) {
+        left++;
+      } else if (sum > 0) {
+        right--;
+      }
+    }
+  }
+
+  return results;
+}
