@@ -380,3 +380,48 @@ function merge(intervals) {
 
   return results;
 }
+
+/* Group Anagrams
+
+Given an array of strings, group anagrams together.
+
+Example:
+Input: ["eat", "tea", "tan", "ate", "nat", "bat"],
+Output:
+[
+  ["ate","eat","tea"],
+  ["nat","tan"],
+  ["bat"]
+]
+
+Note:
+All inputs will be in lowercase.
+The order of your output does not matter.
+
+*/
+
+function groupAnagrams(strs) {
+  let results = new Map();
+
+  for (let i = 0; i < strs.length; i++) {
+    let str = strs[i];
+    let key = str
+      .split('')
+      .sort()
+      .join(''); // 'aet'
+    let value = results.get(key);
+
+    if (value) {
+      results.set(key, [...value, str]);
+    } else {
+      results.set(key, [str]);
+    }
+  }
+
+  let arr = [];
+  results.forEach((v) => {
+    arr.push(v);
+  });
+
+  return arr;
+}
