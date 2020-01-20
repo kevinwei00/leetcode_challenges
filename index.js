@@ -13,10 +13,11 @@ Because nums[0] + nums[1] = 2 + 7 = 9,
 return [0, 1].
 
 */
-
+// use a hashmap for constant lookup of the answer's indices
 function twoSum(nums, target) {
   let hashMap = {};
   for (let i = 0; i < nums.length; i++) {
+    // key: value at index, value: index { '2': 0, '7': 1 }
     hashMap[nums[i].toString()] = i;
   }
   for (let i = 0; i < nums.length; i++) {
@@ -47,7 +48,7 @@ Input: [1,1,1,3,3,4,3,2,4,2]
 Output: true
 
 */
-
+// use a hashmap to add an entry if one doesn't already exist; otherwise, there's a dupe
 function containsDuplicate(nums) {
   const hashMap = {};
 
@@ -55,6 +56,7 @@ function containsDuplicate(nums) {
     if (hashMap.hasOwnProperty(nums[i])) {
       return true;
     } else {
+      // { '1': true, '2': true }
       hashMap[nums[i]] = true;
     }
   }
@@ -83,7 +85,7 @@ Output: 0
 Explanation: In this case, no transaction is done, i.e. max profit = 0.
 
 */
-
+// O(n) to set both minPrice and max profit (currPrice - minPrice)
 function maxProfit(prices) {
   let minPrice = prices[0];
   let max = 0;
