@@ -122,7 +122,7 @@ Follow up:
 What if the inputs contain unicode characters? How would you adapt your solution to such case?
 
 */
-
+// create hashmaps for both strings then check if char frequencys are the same
 function isAnagram(s, t) {
   const hashMapS = {};
   for (let i = 0; i < s.length; i++) {
@@ -191,11 +191,13 @@ Input: "{[]}"
 Output: true
 
 */
-
+// use a stack to add open braces, and pop when encountering matching closing braces.
+// at the end of the loop, if stack is empty, it's valid
 function validParentheses(s) {
   if (s.length === 0) {
     return true;
   }
+  // odd number of braces is always false (means that there's a lone brace)
   if (s.length % 2 > 0) {
     return false;
   }
@@ -240,7 +242,7 @@ Could you solve it with constant space complexity? (The output array does not co
 space for the purpose of space complexity analysis.)
 
 */
-
+// https://leetcode.com/problems/product-of-array-except-self/solution/
 function productExceptSelf(nums) {
   let resultArr = new Array(nums.length);
   resultArr[0] = 1;
@@ -305,7 +307,8 @@ A solution set is:
 ]
 
 */
-
+// MULTIPLE POINTERS - moving inwards
+// time complexity is limited by the sorting -- most JS is O(nlogn)
 function threeSum(nums) {
   const results = [];
 
@@ -358,7 +361,7 @@ Output: [[1,5]]
 Explanation: Intervals [1,4] and [4,5] are considered overlapping.
 
 */
-
+// time complexity is limited by the sorting -- most JS is O(nlogn)
 function merge(intervals) {
   if (intervals.length < 2) {
     return intervals;
@@ -374,8 +377,10 @@ function merge(intervals) {
 
     if (current[0] <= previous[1]) {
       //need Math.max because [[1,4],[2,3]] = [[1,4]]
+      // if there is a merge, replace the last interval in results arr
       results[results.length - 1] = [previous[0], Math.max(current[1], previous[1])];
     } else {
+      // if there is no merge, just add the interval to the results arr
       results.push(current);
     }
   }
@@ -401,7 +406,8 @@ All inputs will be in lowercase.
 The order of your output does not matter.
 
 */
-
+// use a hashmap with (k, v) = (sorted string, anagram)
+// time complexity is limited by the sorting -- most JS is O(nlogn)
 function groupAnagrams(strs) {
   let results = new Map();
 
@@ -440,7 +446,7 @@ Follow up:
 A linked list can be reversed either iteratively or recursively. Could you implement both?
 
 */
-
+// best to draw a picture
 function reverseList(head) {
   let curr = head;
   let prev = null;
@@ -484,7 +490,7 @@ Follow up:
 Can you solve it using O(1) (i.e. constant) memory?
 
 */
-
+// MULTIPLE POINTERS - fast and slow
 function hasCycle(head) {
   if (!head) {
     return false;
@@ -516,23 +522,26 @@ Input: [1,8,6,2,5,4,8,3,7]
 Output: 49
 
 */
-
+// MULTIPLE POINTERS - moving inwards
+// area is limited by the height of the shortest line, so move its index inward for the
+// possibility of a taller line which would increase area (moving the other index inward
+// would only lessen the area)
 function maxArea(height) {
   let max = 0;
-  let idx1 = 0;
-  let idx2 = height.length - 1;
+  let left = 0;
+  let right = height.length - 1;
 
-  while (idx1 < idx2) {
-    let area = (idx2 - idx1) * Math.min(height[idx1], height[idx2]);
+  while (left < right) {
+    let area = (right - left) * Math.min(height[left], height[right]);
     if (max < area) {
       max = area;
     }
 
-    // move the shorter idx inwards
-    if (height[idx1] > height[idx2]) {
-      idx2--;
+    // move the shorter index inwards
+    if (height[left] > height[right]) {
+      right--;
     } else {
-      idx1++;
+      left++;
     }
   }
   return max;
@@ -553,7 +562,7 @@ Input: [4,5,6,7,0,1,2]
 Output: 0
 
 */
-
+// O(n)
 function findMin_linear(nums) {
   for (let i = 0; i < nums.length; i++) {
     if (nums[i + 1] < nums[i]) {
@@ -562,7 +571,7 @@ function findMin_linear(nums) {
   }
   return nums[0];
 }
-
+// possibility of O(logn)
 function findMin_binary(nums) {
   let left = 0;
   let right = nums.length - 1;
@@ -617,7 +626,7 @@ Replace the one 'A' in the middle with 'B' and form "AABBBBA".
 The substring "BBBB" has the longest repeating letters, which is 4.
 
 */
-
+// SLIDING WINDOW
 function characterReplacement(s, k) {
   let hashMap = {};
   let windowStart = 0;
