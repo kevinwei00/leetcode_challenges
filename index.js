@@ -648,3 +648,61 @@ function characterReplacement(s, k) {
 
   return maxWindowSize;
 }
+
+/*
+https://leetcode.com/problems/find-all-anagrams-in-a-string/discuss/92007/sliding-window-algorithm-template-to-solve-all-the-leetcode-substring-search-problem
+
+https://leetcode.com/problems/minimum-window-substring/
+https://leetcode.com/problems/longest-substring-without-repeating-characters/
+https://leetcode.com/problems/substring-with-concatenation-of-all-words/
+https://leetcode.com/problems/longest-substring-with-at-most-two-distinct-characters/
+https://leetcode.com/problems/find-all-anagrams-in-a-string/
+https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters
+https://leetcode.com/problems/longest-repeating-character-replacement
+*/
+
+function slidingWindow(s1, s2) {
+  let result = [];
+  if (s1.length < s2.length || !s1 || !s2) {
+    return result;
+  }
+
+  let map = {};
+  for (let i = 0; i < s2.length; i++) {
+    if (map.hasOwnProperty(s2[i])) {
+      map[s2[i]]++;
+    } else {
+      map[s2[i]] = 1;
+    }
+  }
+
+  let counter = Object.keys(map).length;
+  let start = 0;
+  let end = 0;
+
+  while (end < s1.length) {
+    if (map.hasOwnProperty(s1[end])) {
+      map[s1[end]]--;
+      if (map[s1[end]] === 0) {
+        counter--;
+      }
+    }
+    end++;
+
+    while (counter === 0) {
+      if (map.hasOwnProperty(s1[start])) {
+        map.set(tempc, map.get(tempc) + 1);
+        map[s1[start]]++;
+        if (map[s1[start]] > 0) {
+          counter++;
+        }
+      }
+
+      if (end - start === s2.length) {
+        result.push(start);
+      }
+      start++;
+    }
+  }
+  return result;
+}
