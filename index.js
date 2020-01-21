@@ -257,7 +257,7 @@ function productExceptSelf(nums) {
   return resultArr;
 }
 
-/* Maximum Subarray (kdane)
+/* Maximum Subarray
 
 Given an integer array nums, find the contiguous subarray (containing at least one number)
 which has the largest sum and return its sum.
@@ -272,7 +272,7 @@ If you have figured out the O(n) solution, try coding another solution using the
 conquer approach, which is more subtle.
 
 */
-
+// Either Kadane or Sliding Window
 function maxSubArray(nums) {
   let max = -Infinity;
   let currentMax = 0;
