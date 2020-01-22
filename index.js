@@ -490,7 +490,7 @@ Follow up:
 Can you solve it using O(1) (i.e. constant) memory?
 
 */
-// MULTIPLE POINTERS - fast and slow
+// MULTIPLE POINTERS - fast/slow
 function hasCycle(head) {
   if (!head) {
     return false;
@@ -780,3 +780,43 @@ function numIslands(grid) {
   return total;
 }
 
+/* Remove Nth Node From End of List
+
+Given a linked list, remove the n-th node from the end of list and return its head.
+
+Example:
+Given linked list: 1->2->3->4->5, and n = 2.
+After removing the second node from the end, the linked list becomes 1->2->3->5.
+
+Note:
+Given n will always be valid.
+
+Follow up:
+Could you do this in one pass?
+
+*/
+// MULTIPLE POINTERS - fast/slow
+function removeNthFromEnd(head, n) {
+  let slow = head;
+  let fast = head;
+
+  // start fast pointer n-spaces ahead of slow pointer
+  for (let i = 0; i < n; i++) {
+    fast = fast.next;
+  }
+
+  // need to handle linked lists that have n-length
+  if (!fast) {
+    return slow.next;
+  }
+
+  // as soon as fast can't move forward, exit loop
+  while (fast.next) {
+    fast = fast.next;
+    slow = slow.next;
+  }
+
+  // slow.next.next is safe because slow.next is guaranteed non-null
+  slow.next = slow.next.next;
+  return head;
+}
