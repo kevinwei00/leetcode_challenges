@@ -907,4 +907,54 @@ Return:
 
 */
 // DEPTH FIRST SEARCH
-function pacificAtlantic(matrix) {}
+function pacificAtlantic(matrix) {
+  if (matrix.length === 0) {
+    return [];
+  }
+
+  function dfs(row, col, prev, ocean) {
+    if (row < 0 || col < 0 || row > matrix.length - 1 || col > matrix[0].length - 1) {
+      return;
+    }
+    if (matrix[row][col] < prev) {
+      return;
+    }
+    if (ocean[row][col] === 'x') {
+      return;
+    }
+
+    ocean[row][col] = 'x';
+
+    dfs(row - 1, col, matrix[row][col], ocean);
+    dfs(row + 1, col, matrix[row][col], ocean);
+    dfs(row, col - 1, matrix[row][col], ocean);
+    dfs(row, col + 1, matrix[row][col], ocean);
+  }
+
+  let pacific = Array(matrix.length)
+    .fill('o')
+    .map((col) => Array(matrix[0].length).fill('o'));
+  let atlantic = Array(matrix.length)
+    .fill('o')
+    .map((col) => Array(matrix[0].length).fill('o'));
+
+  for (let row = 0; row < matrix.length; row++) {
+    dfs(row, 0, -1, pacific); // left -> right
+    dfs(row, matrix[0].length - 1, -1, atlantic); // right -> left
+  }
+
+  for (let col = 0; col < matrix[0].length; col++) {
+    dfs(0, col, -1, pacific); // top -> bottom
+    dfs(matrix.length - 1, col, -1, atlantic); // bottom -> top
+  }
+
+  let results = [];
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[0].length; j++) {
+      if (pacific[i][j] === 'x' && atlantic[i][j] === 'x') {
+        results.push([i, j]);
+      }
+    }
+  }
+  return results;
+}
