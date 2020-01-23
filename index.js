@@ -842,7 +842,7 @@ Note:
 The input string length won't exceed 1000.
 
 */
-
+// MULTIPLE POINTERS - moving outwards
 function countSubstrings(s) {
   let count = 0;
   for (let i = 0; i < s.length; i++) {
@@ -859,3 +859,20 @@ function countSubstrings(s) {
     }
   }
 }
+
+/* 
+1. center = space between each char OR each char
+2. can it expand to both its left and right?
+
+    *   *   *   *
+    l   r
+        l   r
+    x           x
+            l   r
+    lr
+        lr
+    x       x
+            lr
+        x       x
+                lr
+*/
