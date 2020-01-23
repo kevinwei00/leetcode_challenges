@@ -849,7 +849,7 @@ function countSubstrings(s) {
   return count;
 
   function helper(left, right) {
-    while (left >= 0 && right <= s.length && s[left] === s[right]) {
+    while (left >= 0 && right < s.length && s[left] === s[right]) {
       count++;
       left--;
       right++;
@@ -872,6 +872,14 @@ function countSubstrings(s) {
             lr
         x       x
                 lr
+
+    *   *   * 
+    l   r
+        l   r
+    lr
+        lr
+    x       x
+            lr
 */
 
 /* Pacific Atlantic Water Flow
