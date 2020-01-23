@@ -243,20 +243,27 @@ space for the purpose of space complexity analysis.)
 
 */
 // https://leetcode.com/problems/product-of-array-except-self/solution/
+// construct 2 arrays: left->right, right->left
 function productExceptSelf(nums) {
-  let resultArr = new Array(nums.length);
-  resultArr[0] = 1;
+  let left = [];
+  let right = [];
+  let result = [];
+
+  left[0] = 1;
   for (let i = 1; i < nums.length; i++) {
-    resultArr[i] = resultArr[i - 1] * nums[i - 1];
+    left[i] = left[i - 1] * nums[i - 1];
   }
 
-  let rightProduct = nums[nums.length - 1];
-  for (let i = resultArr.length - 2; i >= 0; i--) {
-    resultArr[i] *= rightProduct;
-    rightProduct *= nums[i];
+  right[nums.length - 1] = 1;
+  for (let i = nums.length - 2; i >= 0; i--) {
+    right[i] = right[i + 1] * nums[i + 1];
   }
 
-  return resultArr;
+  for (let i = 0; i < nums.length; i++) {
+    result.push(left[i] * right[i]);
+  }
+
+  return result;
 }
 
 /* Maximum Subarray
