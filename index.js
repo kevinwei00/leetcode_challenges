@@ -707,7 +707,6 @@ function slidingWindow(s1, s2) {
 
     while (counter === 0) {
       if (map.hasOwnProperty(s1[start])) {
-        map.set(tempc, map.get(tempc) + 1);
         map[s1[start]]++;
         if (map[s1[start]] > 0) {
           counter++;
